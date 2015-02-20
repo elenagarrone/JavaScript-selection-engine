@@ -6,10 +6,19 @@ var $ = function (selector) {
     selector = selector[selector.length -1];
     id = document.getElementById(selector);
     if (id !== null){
-      elements.push(id)}
-    // }else{
-    //   elements = []
-    // }
+      elements.push(id)
+    }
+  }
+
+  if (selector.indexOf('.') > -1){
+    selector = selector.split('.');
+    selector = selector[selector.length -1];
+    classes = document.getElementsByClassName(selector);
+    if (classes !== null){
+      for (i = 0; i < classes.length; i++){
+        elements.push(classes[i])
+      }
+    }
   }
 
   if (selector !== undefined){
