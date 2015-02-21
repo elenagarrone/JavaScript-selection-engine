@@ -7,11 +7,25 @@ var $ = function (selector) {
     if(selector.indexOf('.') > -1){
       selector = selector.split('.');
       selector = selector[0];
+    } else if (array[0].indexOf('.') > -1){
+      array = array[0].split('.'); 
     }
+
     id = document.getElementById(selector);
-    if (id !== null){
+    tag = document.getElementsByTagName(array[0])
+    if (tag.length > 0){
+      for (i = 0; i < tag.length; i++){
+        if (id === tag[i] || array[0] === ''){
+          elements.push(id)
+        } else {
+          elements = []
+        }
+      }
+    } else {
       elements.push(id)
     }
+
+
   } 
 
   if (selector.indexOf('.') > -1 && selector.indexOf('#') === -1){
