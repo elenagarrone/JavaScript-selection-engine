@@ -5,9 +5,7 @@ var $ = function (selector) {
     var selectors = selector.split('#');
     var selector = selectors[selectors.length -1];
     var tag_selector = selectors[0]
-    if(selector.indexOf('.') > -1){
-      var selector = selector.split('.')[0];
-    } 
+    if(selector.indexOf('.') > -1){ var selector = selector.split('.')[0]; } 
     var element_with_id = document.getElementById(selector);
     var elements_with_tag = document.getElementsByTagName(tag_selector);
     if (elements_with_tag.length > 0){
