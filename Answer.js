@@ -29,42 +29,38 @@ var $ = function (selector) {
     }
   }
 
-  var elementsWithSame = function(id, tag){
+  var isElementWithTagSameAsElementWithId = function(id, tag){
     for (i = 0; i < tag.length; i++){
-      if (id === tag[i]){
-        elements.push(id);
-      } else {
-        elements = [];
-      }
+      id === tag[i] ? elements.push(id) : elements = []
     }
+  }
+
+  var elementsBy = function(idClassOrTag, selector){
+    if (idClassOrTag === 'id')   { return document.getElementById(selector) }
+    if (idClassOrTag === 'class'){ return document.getElementsByClassName(selector) }
+    if (idClassOrTag === 'tag')  { return document.getElementsByTagName(selector) }
+  }
+
+  var elementsWithSameClassAndTag = function(){
+    return elementsBy('class', selector) && elementsBy('tag', tagSelector)
   }
 
   if (selector.indexOf('#') > -1){
     getSelectors('#');
     if(selector.indexOf('.') > -1){ getIdSelector() } 
-    var elementWithId = document.getElementById(selector);
-    var elementsWithTag = document.getElementsByTagName(tagSelector);
-    elementsWithTag.length > 0 ? elementsWithSame(elementWithId, elementsWithTag) : elements.push(elementWithId)
+    elementsBy('tag', tagSelector).length > 0 ? isElementWithTagSameAsElementWithId(elementsBy('id', selector), elementsBy('tag', tagSelector)) : elements.push(elementsBy('id', selector))
   } 
 
   if (selector.indexOf('.') > -1 && selector.indexOf('#') === -1){
     getSelectors('.');
-    var elementsWithClass = document.getElementsByClassName(selector);
     if (tagSelector === ''){
-      if (elementsWithClass !== null){
-        addEachElementOf(elementsWithClass);
-      }
+      addEachElementOf(elementsBy('class', selector));
     } else {
-      var elementsWithTag = document.getElementsByTagName(tagSelector)
-      elementsWithClassAndTag = elementsWithClass && elementsWithTag;
-      if (elementsWithClassAndTag !== null){
-        addEachElementOf(elementsWithClassAndTag);
-      }
+      addEachElementOf(elementsWithSameClassAndTag());
     }
   }
 
-  var elements_with_tag = document.getElementsByTagName(selector)
-  addEachElementOf(elements_with_tag)
+  addEachElementOf(elementsBy('tag', selector))
 
   return elements;
 }
