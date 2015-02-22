@@ -1,8 +1,8 @@
 var $ = function (selector) {
   var elements = [];
 
-  var getSelectors = function(idOrClass){
-    splitWhenFind(idOrClass)
+  var getSelectorsBy = function(idOrClass){
+    splitWhenFind(idOrClass);
     getSelector(selectors);
     getTagSelector(selectors);
   }
@@ -36,9 +36,9 @@ var $ = function (selector) {
   }
 
   var elementsBy = function(idClassOrTag, selector){
-    if (idClassOrTag === 'id')   { return document.getElementById(selector) }
+    if (idClassOrTag === 'id')   { return document.getElementById(selector)         }
     if (idClassOrTag === 'class'){ return document.getElementsByClassName(selector) }
-    if (idClassOrTag === 'tag')  { return document.getElementsByTagName(selector) }
+    if (idClassOrTag === 'tag')  { return document.getElementsByTagName(selector)   }
   }
 
   var elementsWithSameClassAndTag = function(){
@@ -46,13 +46,13 @@ var $ = function (selector) {
   }
 
   if (selector.indexOf('#') > -1){
-    getSelectors('#');
+    getSelectorsBy('#');
     if(selector.indexOf('.') > -1){ getIdSelector() } 
     elementsBy('tag', tagSelector).length > 0 ? isElementWithTagSameAsElementWithId(elementsBy('id', selector), elementsBy('tag', tagSelector)) : elements.push(elementsBy('id', selector))
   } 
 
   if (selector.indexOf('.') > -1 && selector.indexOf('#') === -1){
-    getSelectors('.');
+    getSelectorsBy('.');
     if (tagSelector === ''){
       addEachElementOf(elementsBy('class', selector));
     } else {
@@ -60,7 +60,7 @@ var $ = function (selector) {
     }
   }
 
-  addEachElementOf(elementsBy('tag', selector))
+  addEachElementOf(elementsBy('tag', selector));
 
   return elements;
 }
