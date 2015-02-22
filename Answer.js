@@ -1,14 +1,14 @@
 var $ = function (selector) {
   var elements = [];
 
-  var getSelectors = function(id_or_class){
-    splitWhenFind(id_or_class)
+  var getSelectors = function(idOrClass){
+    splitWhenFind(idOrClass)
     getSelector(selectors);
     getTagSelector(selectors);
   }
 
-  var splitWhenFind = function(id_or_class){
-    selectors = selector.split(id_or_class);
+  var splitWhenFind = function(idOrClass){
+    selectors = selector.split(idOrClass);
   }
 
   var getSelector = function(selectors){
@@ -16,7 +16,7 @@ var $ = function (selector) {
   }
 
   var getTagSelector = function(selectors){
-    tag_selector = selectors[0];
+    tagSelector = selectors[0];
   }
 
   var getIdSelector = function(){
@@ -42,23 +42,23 @@ var $ = function (selector) {
   if (selector.indexOf('#') > -1){
     getSelectors('#');
     if(selector.indexOf('.') > -1){ getIdSelector() } 
-    var element_id = document.getElementById(selector);
-    var elements_tag = document.getElementsByTagName(tag_selector);
-    elements_tag.length > 0 ? elementsWithSame(element_id, elements_tag) : elements.push(element_id)
+    var elementWithId = document.getElementById(selector);
+    var elementsWithTag = document.getElementsByTagName(tagSelector);
+    elementsWithTag.length > 0 ? elementsWithSame(elementWithId, elementsWithTag) : elements.push(elementWithId)
   } 
 
   if (selector.indexOf('.') > -1 && selector.indexOf('#') === -1){
     getSelectors('.');
-    var elements_with_class = document.getElementsByClassName(selector);
-    if (tag_selector === ''){
-      if (elements_with_class !== null){
-        addEachElementOf(elements_with_class);
+    var elementsWithClass = document.getElementsByClassName(selector);
+    if (tagSelector === ''){
+      if (elementsWithClass !== null){
+        addEachElementOf(elementsWithClass);
       }
     } else {
-      var elements_with_tag = document.getElementsByTagName(tag_selector)
-      elements_with_class_and_tag = elements_with_class && elements_with_tag;
-      if (elements_with_class_and_tag !== null){
-        addEachElementOf(elements_with_class_and_tag);
+      var elementsWithTag = document.getElementsByTagName(tagSelector)
+      elementsWithClassAndTag = elementsWithClass && elementsWithTag;
+      if (elementsWithClassAndTag !== null){
+        addEachElementOf(elementsWithClassAndTag);
       }
     }
   }
