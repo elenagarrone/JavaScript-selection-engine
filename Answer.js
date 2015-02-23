@@ -1,6 +1,6 @@
 var $ = function (selector) {
   var elements = [];
-  var idSelector, class_selector, elementsWithTag;
+  var elementWithId, elementsWithTag, elementsWithClass = [];
   var new_arr = [];
 
   var selectors = selector.split(/(?=#)|(?=\.)/)
@@ -8,18 +8,18 @@ var $ = function (selector) {
   for (i = 0; i < selectors.length; i++){
     if (selectors[i].indexOf('#') > -1){
       idSelector = selectors[i].slice(1);
+      elementWithId = document.getElementById(idSelector) 
     } else if (selectors[i].indexOf('.') > -1){
       class_selector = selectors[i].slice(1);
-    } else if (selectors[i].indexOf('#') === -1 && selectors[i].indexOf('.') === -1){
+      elementsByClass = document.getElementsByClassName(class_selector)
+      elementsWithClass = [].slice.call(elementsByClass)
+    } else {
       tagSelector = selectors[i];
       elementsByTag = document.getElementsByTagName(tagSelector) 
       elementsWithTag = [].slice.call(elementsByTag)
     }
   }
 
-  elementWithId = document.getElementById(idSelector) 
-  elementsByClass = document.getElementsByClassName(class_selector)
-  elementsWithClass = [].slice.call(elementsByClass)
 
   if (elementWithId){
     if (elementsWithTag){
