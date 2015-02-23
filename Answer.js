@@ -21,10 +21,11 @@ var $ = function (selector) {
       console.log('tag>>>>>>>>>>>')
   elementWithId = document.getElementById(id_selector) 
       console.log(elementWithId)
-      console.log('>>>>>>>>>>>')
+      console.log('id>>>>>>>>>>>')
   elementsByClass = document.getElementsByClassName(class_selector)
   elementsWithClass = [].slice.call(elementsByClass)
   console.log(elementsWithClass)
+  console.log('class>>>>>>>>>>>')
   console.log('__________')
 
     if (elementWithId){
@@ -50,7 +51,9 @@ var $ = function (selector) {
             }
           }
         } else {
-
+          for (var i=0; i < elementsWithClass.length; i++) {
+            elements.push( elementsWithClass[i] );
+          }
         console.log('in')
         }
       } else {
