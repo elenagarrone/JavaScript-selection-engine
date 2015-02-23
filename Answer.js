@@ -45,7 +45,7 @@ var $ = function (selector) {
         if (elementsWithTag){
           for (var i=0; i < elementsWithTag.length; i++) {
             for (var j=0; j < elementsWithClass.length; j++) {
-              if ( elementsWithTag[i].Id == elementsWithClass[j].Id ) {
+              if ( elementsWithTag[i] === elementsWithClass[j] ) {
                 elements.push( elementsWithTag[i] );
               }
             }
