@@ -2,7 +2,6 @@ var $ = function (selector) {
   var elements = [];
   var elementWithId, elementsWithTag, elementsWithClass = [];
   var new_arr = [];
-
   var selectors = selector.split(/(?=#)|(?=\.)/)
 
   var addAllElementsFrom = function(array){
@@ -11,7 +10,7 @@ var $ = function (selector) {
     }
   }
 
-  var addElementsWith= function(id, tags){
+  var addElementsWithSame= function(id, tags){
     id === tags ? elements.push(id) : elements = []
   }
 
@@ -40,26 +39,21 @@ var $ = function (selector) {
     }
   }
 
-
   if (elementWithId){
-
     if (elementsWithTag){
       for (i = 0; i < elementsWithTag.length; i++){
-        addElementsWith(elementWithId, elementsWithTag[i])
+        addElementsWithSame(elementWithId, elementsWithTag[i])
       }
     } else {
       elements.push(elementWithId)
     }
-
   } else {
     if (elementsWithClass.length > 0){
-
       if (elementsWithTag){
         addSameElementsInArrays(elementsWithTag, elementsWithClass)
       } else {
         addAllElementsFrom(elementsWithClass)
       }
-
     } else {
       addAllElementsFrom(elementsWithTag)
     }
