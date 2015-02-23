@@ -1,6 +1,6 @@
 var $ = function (selector) {
   var elements = [];
-  var id_selector, tag_selector, class_selector;
+  var id_selector, class_selector, elementsWithTag;
   var new_arr = [];
 
   var selectors = selector.split(/(?=#)|(?=\.)/)
@@ -8,24 +8,27 @@ var $ = function (selector) {
   for (i = 0; i < selectors.length; i++){
     if (selectors[i].indexOf('#') > -1){
       id_selector = selectors[i].slice(1);
-    }
-    if (selectors[i].indexOf('.') > -1){
+    } else if (selectors[i].indexOf('.') > -1){
       class_selector = selectors[i].slice(1);
-    }
-    if (selectors[i].indexOf('#') === -1 && selectors[i].indexOf('.') === -1){
+    } else if (selectors[i].indexOf('#') === -1 && selectors[i].indexOf('.') === -1){
       tag_selector = selectors[i];
-      console.log(tag_selector)
-      console.log('>>>>>>>>>>>')
-      elementsWithTag = document.getElementsByTagName(tag_selector) 
+      elementsByTag = document.getElementsByTagName(tag_selector) 
+      elementsWithTag = [].slice.call(elementsByTag)
     }
   }
 
+      console.log(elementsWithTag)
+      console.log('tag>>>>>>>>>>>')
   elementWithId = document.getElementById(id_selector) 
-  // elementsWithTag = [].slice.call(getElementsByTag)
-  elementsWithClass = document.getElementsByClassName(class_selector)
+      console.log(elementWithId)
+      console.log('>>>>>>>>>>>')
+  elementsByClass = document.getElementsByClassName(class_selector)
+  elementsWithClass = [].slice.call(elementsByClass)
+  console.log(elementsWithClass)
+  console.log('__________')
 
     if (elementWithId){
-      if (elementsWithTag.length > 1){
+      if (elementsWithTag){
         for (i = 0; i < elementsWithTag.length; i++){
           if (elementWithId === elementsWithTag[i]){
             elements.push(elementWithId)
@@ -38,7 +41,7 @@ var $ = function (selector) {
       }
     } else {
       if (elementsWithClass.length > 0){
-        if (elementsWithTag.length > 0){
+        if (elementsWithTag){
           for (var i=0; i < elementsWithTag.length; i++) {
             for (var j=0; j < elementsWithClass.length; j++) {
               if ( elementsWithTag[i].Id == elementsWithClass[j].Id ) {
@@ -46,13 +49,14 @@ var $ = function (selector) {
               }
             }
           }
-          console.log(elements)
-        } else{
+        } else {
 
-        }
         console.log('in')
+        }
       } else {
-        console.log('else')
+        for (var i=0; i < elementsWithTag.length; i++) {
+          elements.push( elementsWithTag[i] );
+        }
       }
     }
 
