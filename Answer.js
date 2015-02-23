@@ -14,7 +14,7 @@ var $ = function (selector) {
     id === tags ? elements.push(id) : elements = []
   }
 
-  var addSameElementsInArrays = function(tags, classes){
+  var addSameElementsBetween = function(tags, classes){
     for (var i=0; i < tags.length; i++) {
       for (var j=0; j < classes.length; j++) {
         if ( tags[i] === classes[j] ) {
@@ -49,11 +49,7 @@ var $ = function (selector) {
     }
   } else {
     if (elementsWithClass.length > 0){
-      if (elementsWithTag){
-        addSameElementsInArrays(elementsWithTag, elementsWithClass)
-      } else {
-        addAllElementsFrom(elementsWithClass)
-      }
+      elementsWithTag ? addSameElementsBetween(elementsWithTag, elementsWithClass) : addAllElementsFrom(elementsWithClass)
     } else {
       addAllElementsFrom(elementsWithTag)
     }
