@@ -1,66 +1,63 @@
 var $ = function (selector) {
   var elements = [];
+  var elementWithId, elementsWithTag, elementsWithClass = [];
+  var new_arr = [];
+  var selectors = selector.split(/(?=#)|(?=\.)/)
 
-  var getSelectorsBy = function(idOrClass){
-    splitWhenFind(idOrClass);
-    getSelector(selectors);
-    getTagSelector(selectors);
-  }
-
-  var splitWhenFind = function(idOrClass){
-    selectors = selector.split(idOrClass);
-  }
-
-  var getSelector = function(selectors){
-    selector = selectors[selectors.length -1];
-  }
-
-  var getTagSelector = function(selectors){
-    tagSelector = selectors[0];
-  }
-
-  var getIdSelector = function(){
-    selector = selector.split('.')[0]; 
-  }
-
-  var addEachElementOf = function(array){
-    for (i = 0; i < array.length; i++){
-      elements.push(array[i]);
+  var addAllElementsFrom = function(array){
+    for (var i=0; i < array.length; i++) {
+      elements.push( array[i] );
     }
   }
 
-  var isElementWithTagSameAsElementWithId = function(id, tag){
-    for (i = 0; i < tag.length; i++){
-      id === tag[i] ? elements.push(id) : elements = []
+  var addElementsWithSame= function(id, tags){
+    id === tags ? elements.push(id) : elements = []
+  }
+
+  var addSameElementsInArrays = function(tags, classes){
+    for (var i=0; i < tags.length; i++) {
+      for (var j=0; j < classes.length; j++) {
+        if ( tags[i] === classes[j] ) {
+          elements.push( tags[i] );
+        }
+      }
     }
   }
 
-  var elementsBy = function(idClassOrTag, selector){
-    if (idClassOrTag === 'id')   { return document.getElementById(selector)         }
-    if (idClassOrTag === 'class'){ return document.getElementsByClassName(selector) }
-    if (idClassOrTag === 'tag')  { return document.getElementsByTagName(selector)   }
-  }
-
-  var elementsWithSameClassAndTag = function(){
-    return elementsBy('class', selector) && elementsBy('tag', tagSelector)
-  }
-
-  if (selector.indexOf('#') > -1){
-    getSelectorsBy('#');
-    if(selector.indexOf('.') > -1){ getIdSelector() } 
-    elementsBy('tag', tagSelector).length > 0 ? isElementWithTagSameAsElementWithId(elementsBy('id', selector), elementsBy('tag', tagSelector)) : elements.push(elementsBy('id', selector))
-  } 
-
-  if (selector.indexOf('.') > -1 && selector.indexOf('#') === -1){
-    getSelectorsBy('.');
-    if (tagSelector === ''){
-      addEachElementOf(elementsBy('class', selector));
+  for (i = 0; i < selectors.length; i++){
+    if (selectors[i].indexOf('#') > -1){
+      idSelector = selectors[i].slice(1);
+      elementWithId = document.getElementById(idSelector) 
+    } else if (selectors[i].indexOf('.') > -1){
+      class_selector = selectors[i].slice(1);
+      elementsByClass = document.getElementsByClassName(class_selector)
+      elementsWithClass = [].slice.call(elementsByClass)
     } else {
-      addEachElementOf(elementsWithSameClassAndTag());
+      tagSelector = selectors[i];
+      elementsByTag = document.getElementsByTagName(tagSelector) 
+      elementsWithTag = [].slice.call(elementsByTag)
     }
   }
 
-  addEachElementOf(elementsBy('tag', selector));
+  if (elementWithId){
+    if (elementsWithTag){
+      for (i = 0; i < elementsWithTag.length; i++){
+        addElementsWithSame(elementWithId, elementsWithTag[i])
+      }
+    } else {
+      elements.push(elementWithId)
+    }
+  } else {
+    if (elementsWithClass.length > 0){
+      if (elementsWithTag){
+        addSameElementsInArrays(elementsWithTag, elementsWithClass)
+      } else {
+        addAllElementsFrom(elementsWithClass)
+      }
+    } else {
+      addAllElementsFrom(elementsWithTag)
+    }
+  }
 
   return elements;
 }
