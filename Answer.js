@@ -10,8 +10,8 @@ var $ = function (selector) {
     }
   }
 
-  var addElementsWithSame= function(id, tags){
-    id === tags ? elements.push(id) : elements = []
+  var addElementsWithSame = function(id, tag){
+    id === tag ? elements.push(id) : elements = []
   }
 
   var addSameElementsBetween = function(tags, classes){
