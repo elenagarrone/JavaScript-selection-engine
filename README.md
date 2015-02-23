@@ -2,6 +2,7 @@ JavaScript selection engine
 ===========================
 The task was to create a JavaScript selection engine i.e. a JavaScript function that will return DOM elements given a CSS selector.
 
+This is version 2.0. If you want to have look at version 1.0 click <a href='https://github.com/elenagarrone/JavaScript_selection_engine/tree/0cb8d9dc9006e5b0cfa3f5629b40a424cd21df37'>here</a>.
 
 Technologies:
 ------------
