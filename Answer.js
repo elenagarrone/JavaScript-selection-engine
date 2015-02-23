@@ -5,6 +5,26 @@ var $ = function (selector) {
 
   var selectors = selector.split(/(?=#)|(?=\.)/)
 
+  var addAllElementsFrom = function(array){
+    for (var i=0; i < array.length; i++) {
+      elements.push( array[i] );
+    }
+  }
+
+  var addElementsWith= function(id, tags){
+    id === tags ? elements.push(id) : elements = []
+  }
+
+  var addSameElementsInArrays = function(tags, classes){
+    for (var i=0; i < tags.length; i++) {
+      for (var j=0; j < classes.length; j++) {
+        if ( tags[i] === classes[j] ) {
+          elements.push( tags[i] );
+        }
+      }
+    }
+  }
+
   for (i = 0; i < selectors.length; i++){
     if (selectors[i].indexOf('#') > -1){
       idSelector = selectors[i].slice(1);
@@ -22,36 +42,26 @@ var $ = function (selector) {
 
 
   if (elementWithId){
+
     if (elementsWithTag){
       for (i = 0; i < elementsWithTag.length; i++){
-        if (elementWithId === elementsWithTag[i]){
-          elements.push(elementWithId)
-        } else {
-          elements = []
-        }
+        addElementsWith(elementWithId, elementsWithTag[i])
       }
     } else {
       elements.push(elementWithId)
     }
+
   } else {
     if (elementsWithClass.length > 0){
+
       if (elementsWithTag){
-        for (var i=0; i < elementsWithTag.length; i++) {
-          for (var j=0; j < elementsWithClass.length; j++) {
-            if ( elementsWithTag[i] === elementsWithClass[j] ) {
-              elements.push( elementsWithTag[i] );
-            }
-          }
-        }
+        addSameElementsInArrays(elementsWithTag, elementsWithClass)
       } else {
-        for (var i=0; i < elementsWithClass.length; i++) {
-          elements.push( elementsWithClass[i] );
-        }
+        addAllElementsFrom(elementsWithClass)
       }
+
     } else {
-      for (var i=0; i < elementsWithTag.length; i++) {
-        elements.push( elementsWithTag[i] );
-      }
+      addAllElementsFrom(elementsWithTag)
     }
   }
 
